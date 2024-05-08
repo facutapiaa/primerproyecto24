@@ -40,6 +40,6 @@ export class CardComponent {
         imagen:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxSY764wA06zdXEGMRZuCWscPJppYFd4pcm6QpF7jqJw&s",
         alt:"perro salchicha gordo bachicha"
       }
-    ]G
+    ]
   }
 }
