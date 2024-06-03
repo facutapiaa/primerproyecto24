@@ -1,0 +1,19 @@
+.container{
+    display:flexbox;
+    padding: 10px;
+    text-align: center;
+    justify-content:center
+}
+
+.boton{
+    width: 120px;
+    margin: auto;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+}
+
+mat-form-field{
+display: inline;
+
+}

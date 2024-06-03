@@ -1,17 +1,30 @@
 <mat-toolbar>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span>pedro</span>
-    <button mat-button routerLink="/inicio">inicio</button>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>pedro</span>
+  <button mat-button routerLink="/inicio">inicio</button>
 
-    <!--iconos-->
-    <span class="example-spacer"></span>
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-      <mat-icon>favorite</mat-icon>
-    </button>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-      <mat-icon>share</mat-icon>
-    </button>
-  </mat-toolbar>
+  <!--menu desplegable-->
+  <button mat-button [matMenuTriggerFor]="producto">productos</button>
+  <mat-menu #producto="matMenu">
+    <button mat-menu-item routerLink="/producto">Generales</button>
+    <button mat-menu-item routerLink="/juguetes">Juguetes</button>
+    <button mat-menu-item routerLink="/alimentos">Alimentos</button>
+    <button mat-menu-item routerLink="/ropita">Ropita</button>
+  </mat-menu>
   
+  <span class="example-spacer"></span>
+
+<!--inicio de secion y registro-->
+  <button mat-button [matMenuTriggerFor]="usuario"><mat-icon>account_circle</mat-icon></button>
+  <mat-menu #usuario="matMenu">
+    <button mat-menu-item routerLink="/registro">Registrarse</button>
+    <button mat-menu-item routerLink="/inicio-sesion">Iniciar Sesión</button>
+  </mat-menu>
+
+  <!--carrito-->
+  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    <mat-icon>favorite</mat-icon>
+  </button>
+</mat-toolbar>

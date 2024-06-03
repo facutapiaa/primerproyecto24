@@ -7,7 +7,12 @@ import { FooterComponent } from './components/footer/footer.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
+
+//import para acceder a las rutas
 import { AppRoutingModule } from 'src/app/app-routing.module';
+
+//componentes boton
+import {MatMenuModule} from '@angular/material/menu';
 
 
 @NgModule({
@@ -20,14 +25,16 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
     AppRoutingModule,
     MatIconModule,
     MatButtonModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatMenuModule
   ],
   exports:[
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    MatMenuModule
   ]
 })
 export class SharedModule { }
