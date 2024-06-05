@@ -1,6 +1,6 @@
 <div class="container">
     <div class="col">
-        <h1>registrate</h1>
+        <h1>Inicio Sesion</h1>
 
         <i class="material-icons" style="font-size: 200px;">person</i>
 
@@ -8,7 +8,7 @@
         <!--Email de usuario-->
         <mat-form-field appearance="fill">
             <mat-label>ingrese su email</mat-label>
-            <input matInput placeholder="ej: juancitofoyth32@gmail.com">
+            <input [(ngModel)]="inicio.email" matInput placeholder="ej: juancitofoyth32@gmail.com">
             <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
         </mat-form-field>
 
@@ -16,7 +16,7 @@
 
         <mat-form-field>
             <mat-label>ingrese una contraseña</mat-label>
-            <input matInput [type]="hide ? 'password' : 'text'" #input minlength="6" required="6">
+            <input [(ngModel)]="inicio.password" matInput [type]="hide ? 'password' : 'text'" #input minlength="6" required="6">
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                 [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -25,6 +25,7 @@
         </mat-form-field>
 
         <!--boton para enviar a la base de datos-->
-        <button class="boton" mat-raised-button color="primary">Registrar</button>
+        <button class="boton" mat-raised-button color="primary" (click)="iniciar()" >Registrar</button>
     </div>
+
 </div>

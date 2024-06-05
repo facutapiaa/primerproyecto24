@@ -1,0 +1,10 @@
+mat-form-field{
+    display: inline;
+}
+
+.container{
+    display:flexbox;
+    padding: 10px;
+    text-align: center;
+    justify-content:center
+}
