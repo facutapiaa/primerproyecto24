@@ -26,7 +26,7 @@ export class IniciosesionComponent {
 
   //creamos la funcion crear que se activa con el boton
   iniciar() {
-    const inicial = {
+    const cuenta = {
       email: this.inicio.email,
       password: this.inicio.password,
       nombre: this.inicio.nombre,
@@ -36,32 +36,19 @@ export class IniciosesionComponent {
     }
 
     //metemos la constante dentro de la coleccion
-    this.coleccionInicio.push(inicial);
-
-    //traemos los datos del registro
-    const contraseña =localStorage.getItem('contraseña')
-    const correo =localStorage.getItem('email')
-
-    //condicionales para  iniciar session
-    if(contraseña===this.inicio.password && this.inicio.email){
-      alert("se inicio sesion")
+    const sUsuarioEncontrado = localStorage.getItem(cuenta.email)
+    if (sUsuarioEncontrado) {
+      //convertimos el objeto en string
+      const oUsuarioEncontrado = JSON.parse(sUsuarioEncontrado)
+      const contrasena = oUsuarioEncontrado.password
+      if (contrasena == cuenta.password) {
+        alert("Inicio correctamente, bienvenido " + oUsuarioEncontrado.nombre)
+      }else{
+        ("algo se ha ingreso mal")
+      }
     }else{
-      alert("tamos mal papito")
-    } 
+      console.log("no hay nada en el local storage")
+    }
+
   }
 }
-
-
- /*const datos = localStorage.getItem('user')
-     if (datos) {
-      const usuario = JSON.parse(datos)
-      console.log(usuario)
-      for (let i = 0; i <= usuario.length; i++) {
-        if (usuario.email === this.inicio.email) {
-          if (usuario.password === this.inicio.password) {
-            alert("se inicio correctamente sesion")
-          }
-        }
-      }
-    }*/
-

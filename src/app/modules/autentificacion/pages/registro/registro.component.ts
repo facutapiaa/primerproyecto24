@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
 import { Usuario } from 'src/app/models/usuario';
+
+//importamos servicio de autentificacion
+import { AuthService } from '../../service/auth.service';
+//importamos componente de rutas de angular 
+import { Router } from '@angular/router';
+import { throwError } from 'rxjs';
+
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
@@ -8,6 +15,13 @@ import { Usuario } from 'src/app/models/usuario';
 export class RegistroComponent {
   //input de la contraseña para que no se vean los caracteres
   hide = true;
+
+  constructor(
+    public servicioAuth: AuthService,
+    public ServicioRutas: Router
+  ){}
+
+
 
   //importar la interfaz de usuario inizialisada
   usuarios: Usuario = {
@@ -23,32 +37,35 @@ export class RegistroComponent {
   coleccionUsuarios: Usuario[] = []
 
   //funcion para el registro de nuevos usuarios
-  registrar() {
-    //constante que guarda la informacion que ingresa el usuario
-    const credenciales = {
+  async registrar() {
+
+    //registro con servio de auth
+    const credenciales ={
       email: this.usuarios.email,
-      password: this.usuarios.password,
-      uid: this.usuarios.uid,
-      nombre: this.usuarios.nombre,
-      apellido: this.usuarios.apellido,
-      rol: this.usuarios.rol,
-
+      password: this.usuarios.password
     }
-
-    //enviamos nueva informacion como un nuevo objeto a la coleccion de usuarios
-    this.coleccionUsuarios.push(credenciales);
-
-    alert("te registraste con exito")
+    
+    const res = await this.servicioAuth.registar(credenciales.email,credenciales.password)
+    //metodo then devuelve algo si esta todo bien
+    .then(res=>{
+       alert("te registraste con exito")
+       //el metodo navigate  nos redirecciona a otra vista
+       this.ServicioRutas.navigate(['/inicio'])
+    })
+    //el meotodo cath captura una falla y la devuelve cuando la promesa salga mal
+    .catch(error =>{
+      alert("hubo un error al registrar un nuevo usuario :( \n"+error)
+    })
+   
 
     //lamamos a la funcion para ejecutarla
     this.limpiarInputs();
 
     //usamos local storage para guardar los datos
-    localStorage.setItem('email', this.usuarios.email)
-    localStorage.setItem('contraseña', this.usuarios.password)
-    /*
-    localStorage.setItem('user', JSON.stringify(this.coleccionUsuarios))
-    */
+   
+    
+    localStorage.setItem(this.usuarios.email, JSON.stringify(credenciales))
+    
   }
 
   //funcion para limpiar inputs
