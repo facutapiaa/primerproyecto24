@@ -7,6 +7,8 @@ import { AuthService } from '../../service/auth.service';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 
+import { FirestoreService } from 'src/app/modules/shared/services/firestore.service';
+
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
@@ -18,8 +20,9 @@ export class RegistroComponent {
 
   constructor(
     public servicioAuth: AuthService,
+    public serviciFirestore: FirestoreService,
     public ServicioRutas: Router
-  ){}
+  ) { }
 
 
 
@@ -40,32 +43,46 @@ export class RegistroComponent {
   async registrar() {
 
     //registro con servio de auth
-    const credenciales ={
+    const credenciales = {
       email: this.usuarios.email,
       password: this.usuarios.password
     }
-    
-    const res = await this.servicioAuth.registar(credenciales.email,credenciales.password)
-    //metodo then devuelve algo si esta todo bien
-    .then(res=>{
-       alert("te registraste con exito")
-       //el metodo navigate  nos redirecciona a otra vista
-       this.ServicioRutas.navigate(['/inicio'])
-    })
-    //el meotodo cath captura una falla y la devuelve cuando la promesa salga mal
-    .catch(error =>{
-      alert("hubo un error al registrar un nuevo usuario :( \n"+error)
-    })
-   
 
+    const res = await this.servicioAuth.registar(credenciales.email, credenciales.password)
+      //metodo then devuelve algo si esta todo bien
+      .then(res => {
+        alert("te registraste con exito")
+        //el metodo navigate  nos redirecciona a otra vista
+        this.ServicioRutas.navigate(['/inicio'])
+      })
+      //el meotodo cath captura una falla y la devuelve cuando la promesa salga mal
+      .catch(error => {
+        alert("hubo un error al registrar un nuevo usuario :( \n" + error)
+      })
+
+    const uid = await this.servicioAuth.obtenerUID();
+    this.usuarios.uid = uid;
+    this.guardarUsuario();
     //lamamos a la funcion para ejecutarla
     this.limpiarInputs();
 
     //usamos local storage para guardar los datos
-   
-    
+
+
     localStorage.setItem(this.usuarios.email, JSON.stringify(credenciales))
-    
+
+  }
+
+  async guardarUsuario() {
+    this.serviciFirestore.agregarUsuario(this.usuarios, this.usuarios.uid)
+      .then(res => {
+        console.log(this.usuarios)
+      })
+      .catch(err => {
+        console.log("error => " + err)
+      })
+
+
   }
 
   //funcion para limpiar inputs

@@ -20,8 +20,21 @@ export class AuthService {
   }
 
   //FUNCION PARA CERRAR SESION
-CerrarSesion(){
+CerrarSesion(){ 
   return this.auth.signOut()
+}
+
+
+//funcion para tomar el UID
+async obtenerUID(){
+  //nos va a generar una promesa y la constante la va a capturar
+  const user =await this.auth.currentUser
+
+  if(user == null){
+    return null
+  }else{
+    return user.uid
+  }
 }
 
 }

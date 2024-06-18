@@ -1,6 +1,9 @@
 import { FocusTrap } from '@angular/cdk/a11y';
 import { Component } from '@angular/core';
 import { Usuario } from 'src/app/models/usuario';
+import { Router } from '@angular/router';
+import { FirestoreService } from 'src/app/modules/shared/services/firestore.service';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-iniciosesion',
@@ -10,9 +13,16 @@ import { Usuario } from 'src/app/models/usuario';
 
 export class IniciosesionComponent {
   hide = true;
+  constructor(
+    public servicioAuth: AuthService,
+    public servicioRutas: Router,
+    public servcioFirestore: FirestoreService
+  ){}
+
+
 
   //importar la interfaz de usuario inizialisada
-  inicio: Usuario = {
+  usuario: Usuario = {
     uid: '',
     nombre: '',
     apellido: '',
@@ -22,33 +32,27 @@ export class IniciosesionComponent {
   }
 
   //creamos una coleccion de usuarios tipo 'usuario' para arrays
-  coleccionInicio: Usuario[] = []
+  //coleccionInicio: Usuario[] = []
 
   //creamos la funcion crear que se activa con el boton
-  iniciar() {
-    const cuenta = {
-      email: this.inicio.email,
-      password: this.inicio.password,
-      nombre: this.inicio.nombre,
-      apellido: this.inicio.apellido,
-      rol: this.inicio.rol,
-      uid: this.inicio.uid,
+   async iniciar() {
+    const credenciales = {
+      email : this.usuario.email,
+      password : this.usuario.password,
     }
 
+    const res = await this.servicioAuth.IniciarSesion(credenciales.email,credenciales.password)
     //metemos la constante dentro de la coleccion
-    const sUsuarioEncontrado = localStorage.getItem(cuenta.email)
-    if (sUsuarioEncontrado) {
-      //convertimos el objeto en string
-      const oUsuarioEncontrado = JSON.parse(sUsuarioEncontrado)
-      const contrasena = oUsuarioEncontrado.password
-      if (contrasena == cuenta.password) {
-        alert("Inicio correctamente, bienvenido " + oUsuarioEncontrado.nombre)
-      }else{
-        ("algo se ha ingreso mal")
-      }
-    }else{
-      console.log("no hay nada en el local storage")
-    }
+    
+    .then(res=> {
+      alert("se produjo un error")
+
+      this.servicioRutas.navigate(['/inicio'])
+    }) 
+    .catch(err=>{
+      alert("hubo un error al inicio sesion")
+    })
+    
 
   }
 }
