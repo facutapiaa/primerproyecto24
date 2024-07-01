@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './modules/shared/shared.module';
 
 //FIREBASE -> importamos herramientas de la base de datos
-import { environment } from 'src/environments/environments'; //vinculaa la BD con la app
+import { environment } from 'src/environments/environments'; //vincula la BD con la app
 import {AngularFireModule} from '@angular/fire/compat' //trabaja con la coleccion de informacion
 import { AngularFireAuthModule} from '@angular/fire/compat/auth'; //trabaja con la autentificacion
 import { AngularFireStorageModule} from '@angular/fire/compat/storage' //trabaja con imagenes y archivos

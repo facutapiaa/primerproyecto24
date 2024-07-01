@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InicioModule } from './modules/inicio/inicio.module';
 import { InicioComponent } from './modules/inicio/pages/inicio/inicio.component';
+import { RegistroComponent } from './modules/autentificacion/pages/registro/registro.component';
 
 const routes: Routes = [
   //ruta por defecto en la inicializacion
-{path:"",component:InicioComponent},
+{path:"",component:RegistroComponent},
 //ruta perezosa
 //ruta que nos vincula al modulo de inicio y todo su contenido 
 //loadChildren: indica que habra una ruta hija

@@ -32,7 +32,7 @@ export class FirestoreService {
         y setea la informacion que ingresamos en el formulario de registro
         */ 
 
-        const resultado = await this.usuarioCollection.doc(id).set.(usuario)
+        const resultado = await this.usuarioCollection.doc(id).set(usuario)
 
         resolve(resultado)
       } catch (error){

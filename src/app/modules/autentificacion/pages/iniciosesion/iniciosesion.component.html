@@ -8,7 +8,7 @@
         <!--Email de usuario-->
         <mat-form-field appearance="fill">
             <mat-label>ingrese su email</mat-label>
-            <input [(ngModel)]="inicio.email" matInput placeholder="ej: juancitofoyth32@gmail.com">
+            <input [(ngModel)]="usuario.email" matInput placeholder="ej: juancitofoyth32@gmail.com">
             <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
         </mat-form-field>
 
@@ -16,7 +16,7 @@
 
         <mat-form-field>
             <mat-label>ingrese una contraseña</mat-label>
-            <input [(ngModel)]="inicio.password" matInput [type]="hide ? 'password' : 'text'" #input minlength="6" required="6">
+            <input [(ngModel)]="usuario.password" matInput [type]="hide ? 'password' : 'text'" #input minlength="6" required="6">
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                 [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>

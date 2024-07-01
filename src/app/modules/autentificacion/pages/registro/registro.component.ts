@@ -9,6 +9,9 @@ import { throwError } from 'rxjs';
 
 import { FirestoreService } from 'src/app/modules/shared/services/firestore.service';
 
+//importamos paqueteria de criptacion
+import * as Cryptojs from 'crypto-js';
+
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
@@ -23,8 +26,6 @@ export class RegistroComponent {
     public serviciFirestore: FirestoreService,
     public ServicioRutas: Router
   ) { }
-
-
 
   //importar la interfaz de usuario inizialisada
   usuarios: Usuario = {
@@ -48,7 +49,7 @@ export class RegistroComponent {
       password: this.usuarios.password
     }
 
-    const res = await this.servicioAuth.registar(credenciales.email, credenciales.password)
+    const res = await this.servicioAuth.registrar(credenciales.email, credenciales.password)
       //metodo then devuelve algo si esta todo bien
       .then(res => {
         alert("te registraste con exito")
@@ -62,15 +63,16 @@ export class RegistroComponent {
 
     const uid = await this.servicioAuth.obtenerUID();
     this.usuarios.uid = uid;
+
+      /* 
+      SHA256 es un algoritmo de hash seguro que toma entrada (en este caso la contraseña)
+      y produce una cadena de caracteres HEXADECIAMAL que va a representar su hash     
+      */
+      this.usuarios.password = CryptoJS.SHA256(this.usuarios.password).toString();
+
+    //llamamos a la funcion para ejecutarla
     this.guardarUsuario();
-    //lamamos a la funcion para ejecutarla
     this.limpiarInputs();
-
-    //usamos local storage para guardar los datos
-
-
-    localStorage.setItem(this.usuarios.email, JSON.stringify(credenciales))
-
   }
 
   async guardarUsuario() {
@@ -81,8 +83,6 @@ export class RegistroComponent {
       .catch(err => {
         console.log("error => " + err)
       })
-
-
   }
 
   //funcion para limpiar inputs
@@ -98,4 +98,8 @@ export class RegistroComponent {
       rol: this.usuarios.rol = '',
     }
   }
+
+
+
+
 }

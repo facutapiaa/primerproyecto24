@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { FirestoreService } from '../../shared/services/firestore.service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(public auth: AngularFireAuth) { }
+  constructor(
+    private auth: AngularFireAuth, 
+    private servicioFirestore: AngularFirestore
+
+  ) { }
 
   //FUNCION PARA REGISTRO
-  registar(email:string, password:string){
+  registrar(email:string, password:string){
     //Retorna el valor que es creado con el metodo "createemail"
     return this.auth.createUserWithEmailAndPassword(email,password)
   }
@@ -35,6 +41,16 @@ async obtenerUID(){
   }else{
     return user.uid
   }
+}
+
+ObtenerUsuario(email:string){
+
+  /* 
+    retomamos del servicio firestore la coleccion de usuarios, buscamos una referecnia en los emails registrados 
+    y los comparamos con lo que ingrese el usuario  al iniciar sesion y lo obtiene con el .get()
+    Lo vuelve una promesa => que da un resultado sea resuelto o rechazado
+  */
+  return this.servicioFirestore.collection('usuarios', ref => ref.where('email','==',email)).get().toPromise();
 }
 
 }

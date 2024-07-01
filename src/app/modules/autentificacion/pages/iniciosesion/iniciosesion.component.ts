@@ -4,6 +4,7 @@ import { Usuario } from 'src/app/models/usuario';
 import { Router } from '@angular/router';
 import { FirestoreService } from 'src/app/modules/shared/services/firestore.service';
 import { AuthService } from '../../service/auth.service';
+import * ass CryptoJs from 'cryptojs';
 
 @Component({
   selector: 'app-iniciosesion',
@@ -31,8 +32,7 @@ export class IniciosesionComponent {
     password: '',
   }
 
-  //creamos una coleccion de usuarios tipo 'usuario' para arrays
-  //coleccionInicio: Usuario[] = []
+
 
   //creamos la funcion crear que se activa con el boton
    async iniciar() {
@@ -45,7 +45,7 @@ export class IniciosesionComponent {
     //metemos la constante dentro de la coleccion
     
     .then(res=> {
-      alert("se produjo un error")
+      alert("Inicio sesion con exito")
 
       this.servicioRutas.navigate(['/inicio'])
     }) 
