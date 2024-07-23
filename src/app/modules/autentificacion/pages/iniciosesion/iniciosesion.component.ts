@@ -4,7 +4,7 @@ import { Usuario } from 'src/app/models/usuario';
 import { Router } from '@angular/router';
 import { FirestoreService } from 'src/app/modules/shared/services/firestore.service';
 import { AuthService } from '../../service/auth.service';
-import * ass CryptoJs from 'cryptojs';
+import * as CryptoJs from 'crypto-js';
 
 @Component({
   selector: 'app-iniciosesion',
@@ -18,7 +18,7 @@ export class IniciosesionComponent {
     public servicioAuth: AuthService,
     public servicioRutas: Router,
     public servcioFirestore: FirestoreService
-  ){}
+  ) { }
 
 
 
@@ -35,24 +35,63 @@ export class IniciosesionComponent {
 
 
   //creamos la funcion crear que se activa con el boton
-   async iniciar() {
+  async iniciar() {
     const credenciales = {
-      email : this.usuario.email,
-      password : this.usuario.password,
+      email: this.usuario.email,
+      password: this.usuario.password,
     }
 
-    const res = await this.servicioAuth.IniciarSesion(credenciales.email,credenciales.password)
-    //metemos la constante dentro de la coleccion
     
-    .then(res=> {
-      alert("Inicio sesion con exito")
+    try {
+      const usuarioBD = await this.servicioAuth.ObtenerUsuario(credenciales.email)
 
-      this.servicioRutas.navigate(['/inicio'])
-    }) 
-    .catch(err=>{
-      alert("hubo un error al inicio sesion")
-    })
-    
+      //condicional verificada que ese usuario de la BD existiera o que sea igual al de nuestra coleccion
+      if (!usuarioBD || usuarioBD.empty) {
+        alert("correo electronico no esta registrado");
+        this.limpiarInputs();
+        return;
+      } 
 
+      //vinvulaba al primer documento  de la coleccion "usuarios" que se obtenia de la base de datos
+      const usuarioDoc = usuarioBD.docs[0];
+      //extrae los datos del documento en forma de objeto y se especifica que va a ser de tipo usuario (se refiere a la interfaz usuario)
+      const usuarioData = usuarioDoc.data() as Usuario;
+      //encripta la contraseña que el usuario manda al iniciar sesion
+      const hashedPassword = CryptoJs.SHA256(credenciales.password).toString();
+
+      //compara la contraseña que acabamos de encriptar y que el usuario envio con la que recibimos del "usuarioData"
+      if (hashedPassword !== usuarioData.password) {
+        alert("contraseña incorrecta")
+
+        this.usuario.password = '';
+        return
+      }
+
+      const res = await this.servicioAuth.IniciarSesion(credenciales.email, credenciales.password)
+        //metemos la constante dentro de la coleccion
+
+        .then(res => {
+          alert("Inicio sesion con exito")
+
+          this.servicioRutas.navigate(['/inicio'])
+        })
+        .catch(err => {
+          alert("hubo un error al inicio sesion")
+
+          this.limpiarInputs();
+        })
+    } catch(error){
+      this.limpiarInputs();
+    }
+    }
+  
+
+
+  limpiarInputs() {
+    //en la constante inputs llamamos los atributos y los inicializamos vacios
+    const inputs = {
+      email: this.usuario.email = '',
+      password: this.usuario.password = '',
+    }
   }
 }
