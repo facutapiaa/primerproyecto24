@@ -10,7 +10,10 @@ import { throwError } from 'rxjs';
 import { FirestoreService } from 'src/app/modules/shared/services/firestore.service';
 
 //importamos paqueteria de criptacion
-import * as Cryptojs from 'crypto-js';
+import * as CryptoJS from 'crypto-js';
+
+//paqueteria de alertas perzonalisadas
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-registro',
@@ -52,13 +55,21 @@ export class RegistroComponent {
     const res = await this.servicioAuth.registrar(credenciales.email, credenciales.password)
       //metodo then devuelve algo si esta todo bien
       .then(res => {
-        alert("te registraste con exito")
+        Swal.fire({
+          title: "¡Buen trabajo!",
+          text: "Se pudo registrar con exito :D",
+          icon: "success"
+        });
         //el metodo navigate  nos redirecciona a otra vista
         this.ServicioRutas.navigate(['/inicio'])
       })
       //el meotodo cath captura una falla y la devuelve cuando la promesa salga mal
       .catch(error => {
-        alert("hubo un error al registrar un nuevo usuario :( \n" + error)
+        Swal.fire({
+          title: "¡Ocurrio un error!",
+          text: "Tan inutil vas a ser >:( \n"+error,
+          icon: "error"
+        });
       })
 
     const uid = await this.servicioAuth.obtenerUID();

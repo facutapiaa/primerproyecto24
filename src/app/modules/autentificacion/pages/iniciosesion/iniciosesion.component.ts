@@ -6,6 +6,9 @@ import { FirestoreService } from 'src/app/modules/shared/services/firestore.serv
 import { AuthService } from '../../service/auth.service';
 import * as CryptoJs from 'crypto-js';
 
+import Swal from 'sweetalert2';
+
+
 @Component({
   selector: 'app-iniciosesion',
   templateUrl: './iniciosesion.component.html',
@@ -47,7 +50,11 @@ export class IniciosesionComponent {
 
       //condicional verificada que ese usuario de la BD existiera o que sea igual al de nuestra coleccion
       if (!usuarioBD || usuarioBD.empty) {
-        alert("correo electronico no esta registrado");
+        Swal.fire({
+          title: "¡Ocurrio un error!",
+          text: "Error al leer el correo",
+          icon: "error"
+        });;
         this.limpiarInputs();
         return;
       } 
@@ -71,12 +78,20 @@ export class IniciosesionComponent {
         //metemos la constante dentro de la coleccion
 
         .then(res => {
-          alert("Inicio sesion con exito")
+          Swal.fire({
+            title: "¡Se ha iniciado sesion",
+            text: "Se inicio sesion correctamente",
+            icon: "success"
+          });
 
           this.servicioRutas.navigate(['/inicio'])
         })
         .catch(err => {
-          alert("hubo un error al inicio sesion")
+          Swal.fire({
+            title: "¡Tan inutil vas a ser >:(!",
+            text: "Hubo un error en la contraseña",
+            icon: "error"
+          });
 
           this.limpiarInputs();
         })
