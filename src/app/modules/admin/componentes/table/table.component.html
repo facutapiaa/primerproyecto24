@@ -13,28 +13,28 @@
     <tbody>
         <tr *ngFor="let col of coleccionProductos">
             <th scope="col">1</th>
-            
+
             <td>
-                <img src="{{col.imagen}}">
+                <img src="{{col.img}}">
             </td>
             <td>{{col.nombre}}</td>
             <td>{{col.precio}}</td>
             <td>{{col.descripcion}}</td>
             <td>{{col.categoria}}</td>
-            
+
 
             <!--ACCIONES-->
-            <td> 
+            <td>
                 <button id="btn-edit" title="Editar" type="button" class="btn btn-outline-warning">
                     <mat-icon>edit</mat-icon>
                 </button>
             </td>
-            <td> 
+            <td>
                 <button id="btn-delete" title="ELiminar" type="button" class="btn btn-outline-danger">
                     <mat-icon>delete</mat-icon>
                 </button>
             </td>
-            <td> 
+            <td>
                 <button>
                     <mat-icon>editar</mat-icon>
                 </button>
@@ -42,3 +42,80 @@
         </tr>
     </tbody>
 </table>
+
+
+
+
+  <!-- Modal Para agregar un nuevo producto-->
+  <div class="modal fade" id="agregarProducto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+
+            <!--Titulo modal-->
+          <h1 class="modal-title fs-5" id="exampleModalLabel">ingrese un nuevo producto</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <!--Cuerpo del modal-->
+        <div [formGroup]="producto" class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Ingrese el nombre del producto</label>
+            <input class="form-control" type="text" formControlName="nombre" placeholder="Ej: Flores">
+          </div>
+        </div>
+
+        <div [formGroup]="producto" class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Ingrese el nombre del producto</label>
+              <input class="form-control" type="text" formControlName="nombre" placeholder="Ej: Flores">
+            </div>
+          </div>
+          
+          <div [formGroup]="producto" class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Ingrese la imagen</label>
+              <input class="form-control" type="text" formControlName="img">
+            </div>
+          </div>
+
+          <div [formGroup]="producto" class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Ingrese el precio</label>
+              <input class="form-control" type="number" formControlName="precio" placeholder="Ej: $20.000">
+            </div>
+          </div>
+
+          <div [formGroup]="producto" class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Ingrese la descripcion</label>
+              <input class="form-control" type="text" formControlName="descripcion" placeholder="Ej: Flores">
+            </div>
+          </div>
+
+          <div [formGroup]="producto" class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Ingrese la categoria</label>
+              <select class="form-control form-select" formControlName="categoria">
+                <option selected>elija una opcion</option>
+                <option value="alimentos">alimentos</option>
+                <option value="juguetes">ropita</option>
+                <option value="productos">juguetes</option>
+              </select>
+            </div>
+          </div>
+
+        <!--Acciones del modal-->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal" (click)="agregarProducto()" >guardar</button>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Boton de agregar nuevos productos -->
+<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#agregarProducto">
+    agregar un nuevo producto
+</button>

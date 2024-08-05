@@ -44,7 +44,7 @@ export class IniciosesionComponent {
       password: this.usuario.password,
     }
 
-    
+
     try {
       const usuarioBD = await this.servicioAuth.ObtenerUsuario(credenciales.email)
 
@@ -57,7 +57,7 @@ export class IniciosesionComponent {
         });;
         this.limpiarInputs();
         return;
-      } 
+      }
 
       //vinvulaba al primer documento  de la coleccion "usuarios" que se obtenia de la base de datos
       const usuarioDoc = usuarioBD.docs[0];
@@ -95,11 +95,11 @@ export class IniciosesionComponent {
 
           this.limpiarInputs();
         })
-    } catch(error){
+    } catch (error) {
       this.limpiarInputs();
     }
-    }
-  
+  }
+
 
 
   limpiarInputs() {

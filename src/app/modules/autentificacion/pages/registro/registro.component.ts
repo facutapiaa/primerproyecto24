@@ -5,8 +5,6 @@ import { Usuario } from 'src/app/models/usuario';
 import { AuthService } from '../../service/auth.service';
 //importamos componente de rutas de angular 
 import { Router } from '@angular/router';
-import { throwError } from 'rxjs';
-
 import { FirestoreService } from 'src/app/modules/shared/services/firestore.service';
 
 //importamos paqueteria de criptacion
