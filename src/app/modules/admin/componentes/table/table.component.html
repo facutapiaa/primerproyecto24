@@ -30,7 +30,8 @@
                 </button>
             </td>
             <td>
-                <button id="btn-delete" title="ELiminar" type="button" class="btn btn-outline-danger">
+                <button id="btn-delete" title="ELiminar" type="button" class="btn btn-outline-danger" 
+                data-bs-toggle="modal" data-bs-target="#eliminarProducto" (click)="mostarBorrar(productoSeleccionado)">
                     <mat-icon>delete</mat-icon>
                 </button>
             </td>
@@ -43,7 +44,10 @@
     </tbody>
 </table>
 
-
+  <!-- Boton de agregar nuevos productos -->
+<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#agregarProducto">
+    agregar un nuevo producto
+</button>
 
 
   <!-- Modal Para agregar un nuevo producto-->
@@ -108,14 +112,28 @@
         <!--Acciones del modal-->
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal" (click)="agregarProducto()" >guardar</button>
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">cancelar</button>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" >cancelar</button>
         </div>
       </div>
     </div>
   </div>
 
+<!-- Modal -->
+<div class="modal fade" id="eliminarProducto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <!-- Boton de agregar nuevos productos -->
-<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#agregarProducto">
-    agregar un nuevo producto
-</button>

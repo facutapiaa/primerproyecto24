@@ -12,6 +12,10 @@ export class TableComponent {
   //creamos collecion local de productos  -> la definimos como array
   coleccionProductos: Producto[] = [];
 
+  productoSeleccionado!: Producto; //toma valores vacios
+
+  modalVisibleProducto: Boolean= false
+
   //definimos formulario para los productos
   producto = new FormGroup({
     nombre: new FormControl('', Validators.required),
@@ -49,5 +53,22 @@ export class TableComponent {
           alert("ha ocurrido un error al cargar el producto")
       })
     }
+  }
+
+  
+  mostarBorrar(productoSeleccionado: Producto){
+    this.modalVisibleProducto = true;
+    this.productoSeleccionado = productoSeleccionado;
+  }
+
+
+  borrarProducto(){
+    this.servicioCroud.eliminarProductos(this.productoSeleccionado.idProducto)
+    .then(respuesta=>{
+      alert("se ha podido eliminar con exito")
+    })
+    .catch(error=>{
+      alert("ha ocurrido un error al eliminar un producto \n"+error)
+    })
   }
 }
